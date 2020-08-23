@@ -12,7 +12,7 @@ using static System.Math;
 
 namespace WindowsFormsApp3
 {
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
         static bool error = true;
         List<int> parameters = new List<int>();
@@ -44,9 +44,9 @@ namespace WindowsFormsApp3
             }
             return get;
         }
-        public static ref Form1 form()
+        public static ref Game form()
         {
-            return ref Program.reform.form;
+            return ref Init.reform.form;
         }
         public static void time(ref Timer timer, in int Interval, in EventHandler Event)
         {
@@ -61,7 +61,7 @@ namespace WindowsFormsApp3
             b = medium;
         }
 
-        public Form1()
+        public Game()
         {
             InitializeComponent();
             try
@@ -675,8 +675,8 @@ namespace WindowsFormsApp3
             body.Add(random.mass(field.free));
             field.fill_rect(body[0], color);
             field.free[body[0]] = 0;
-            Form1.time(ref timer, t0, new EventHandler(Event));
-            Form1.form().KeyDown += keyEventHandler;
+            Game.time(ref timer, t0, new EventHandler(Event));
+            Game.form().KeyDown += keyEventHandler;
 
             void keyEvent(object s, KeyEventArgs e)
             {
@@ -704,13 +704,13 @@ namespace WindowsFormsApp3
                 else timer.Interval = Max(t0 / (rate * rate), 1);
                 int[] sum = new int[2] { 0, 0 };
                 for (int i = 0; i < field.players; ++i) sum[i % 2] += field.snakes[i].points + field.snakes[i].body.Count - 1;
-                Form1.label[id % 2].Text = sum[id % 2].ToString();
+                Game.label[id % 2].Text = sum[id % 2].ToString();
                 if (sum[id % 2] >= finish)
                 {
                     for (int i = 0; i < field.snakes.Length; ++i) field.snakes[i].Clear();
                     for (int i = 0; i < armor.timers.Length; ++i) armor.timers[i].Dispose();
                     food.Clear_bonus(); field.timer.Dispose();
-                    if (Form1.cursor == 0)
+                    if (Game.cursor == 0)
                     {
                         string mes = " Игра окончена! ";
                         string[] str = new string[] { "первый", "второй" };
@@ -729,7 +729,7 @@ namespace WindowsFormsApp3
 
             body.Add(random.mass(field.free));
             field.objects[body[0]] = new food(body[0], "bonus");
-            Form1.time(ref timer, 1000, new EventHandler(Event));
+            Game.time(ref timer, 1000, new EventHandler(Event));
 
             max_bonus = field.mushroom;
             void Event(object s, EventArgs e)
@@ -885,7 +885,7 @@ namespace WindowsFormsApp3
         }
         public void Clear()
         {
-            if (keyEventHandler != null) Form1.form().KeyDown -= keyEventHandler;
+            if (keyEventHandler != null) Game.form().KeyDown -= keyEventHandler;
             timer.Dispose();
         }
     }
@@ -946,11 +946,11 @@ namespace WindowsFormsApp3
                     bonus_color = color;
                     bonus_target = target;
                     ++use;
-                    Form1.time(ref bonus_timer, time, new EventHandler(Event));
+                    Game.time(ref bonus_timer, time, new EventHandler(Event));
                 }
-                Form1.time(ref timer, time, new EventHandler(delegate (object s, EventArgs e) { field.fill_rect(coord, bonus_color); }));
+                Game.time(ref timer, time, new EventHandler(delegate (object s, EventArgs e) { field.fill_rect(coord, bonus_color); }));
             }
-            else Form1.time(ref timer, time, new EventHandler(Event));
+            else Game.time(ref timer, time, new EventHandler(Event));
             void Event(object sender, EventArgs e)
             {
                 if (_type != "bonus") Code(ref color, ref target);
@@ -1040,13 +1040,13 @@ namespace WindowsFormsApp3
             type = "armor";
             field.free[coord] = 0;
             timer = new Timer();
-            Form1.time(ref timer, 10, delegate (object s, EventArgs e) { field.fill_arm(coord); });
+            Game.time(ref timer, 10, delegate (object s, EventArgs e) { field.fill_arm(coord); });
         }
         public static void to_player(int id)
         {
             timers[id].Dispose();
             field.snakes[id].DrawArm();
-            Form1.time
+            Game.time
             (
                 ref timers[id],
                 13200,

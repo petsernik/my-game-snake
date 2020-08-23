@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp3
 {
-    static class Program
+    static class Init
     {
         /// <summary>
         /// Главная точка входа для приложения.
@@ -17,12 +17,12 @@ namespace WindowsFormsApp3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            reform.form = new Form1();
+            reform.form = new Game();
             Application.Run(reform.form);
         }
         public static class reform
         {
-            public static Form1 form;
+            public static Game form;
         }
     }
 }
