@@ -828,7 +828,7 @@ namespace WindowsFormsApp3
                 int x = field.snakes[i].body.IndexOf(to);
                 if (x > -1)
                 {
-                    if (!armor.timers[i].Enabled && x + 1 != field.snakes[i].body.Count)
+                    if (!armor.timers[i].Enabled && x != field.snakes[i].body.Count - 1)
                     {
                         for (int j = 0; j <= x; ++j) field.objects[field.snakes[i].body[j]] = new food(field.snakes[i].body[j], "dead");
                         field.snakes[i].body.RemoveRange(0, x + 1);
